@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Conference.Application/Conference.Application.csproj" />
+  <Project Path="Conference.Domain/Conference.Domain.csproj" />
+  <Project Path="Conference.Infrastructure/Conference.Infrastructure.csproj" />
+  <Project Path="Conference.WebApi/Conference.WebApi.csproj" />
+</Solution>
