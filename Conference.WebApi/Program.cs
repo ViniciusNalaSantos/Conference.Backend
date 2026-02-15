@@ -11,6 +11,7 @@ builder.Services.AddOpenApi();
 builder.Services.Configure<ServiceBusSettings>(
     builder.Configuration.GetSection("ServiceBus")
 );
+builder.Services.AddAzureServiceBusService();
 
 var app = builder.Build();
 

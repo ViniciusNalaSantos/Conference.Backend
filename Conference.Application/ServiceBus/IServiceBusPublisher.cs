@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Conference.Application.EventBus;
-internal interface IServiceBusPublisher
+public interface IServiceBusPublisher
 {
-    public Task PublishMessage<T>(T message) where T: class;
+    public Task PublishMessageAsync<T>(T message) where T: class;
 }
