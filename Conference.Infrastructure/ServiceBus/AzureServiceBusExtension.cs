@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using Azure.Messaging.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
+using Conference.Application.EventBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 [assembly: InternalsVisibleTo("Conference.WebApi")]
 
@@ -19,6 +20,8 @@ internal static class AzureServiceBusExtension
             var options = sp.GetRequiredService<IOptions<ServiceBusSettings>>().Value;
             return new ServiceBusClient(options.ConnectionString);
         });
+
+        services.AddScoped<IServiceBusPublisher, AzureServiceBusPublisherAdapter>();
     }
 }
 
