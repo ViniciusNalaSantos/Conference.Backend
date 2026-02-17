@@ -27,7 +27,8 @@ public class OrdersController: ControllerBase
         var message = new CreateOrderMessage
         {
             AttendeeIdList = inputOrder.AttendeeIdList,
-            ConferenceId = inputOrder.ConferenceId
+            ConferenceId = inputOrder.ConferenceId,
+            SeatId = inputOrder.SeatId
         };
 
         await _serviceBus.PublishMessageAsync(message);

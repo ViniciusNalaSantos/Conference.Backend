@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Conference.Application.ServiceBus;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,8 +22,10 @@ public sealed class MessageDispatcher
 
         var @event = JsonSerializer.Deserialize(body, type);
 
-        //var handlerType = typeof(IIntegrationEventHandler<>).MakeGenericType(type);
-        //dynamic handler = _serviceProvider.GetRequiredService(handlerType);
-        //await handler.HandleAsync((dynamic)@event, token);
+        var handlerType = typeof(IServiceBusMessageHandler<>).MakeGenericType(type);
+        
+        dynamic handler = _serviceProvider.GetRequiredService(handlerType);
+
+        await handler.HandleMessageAsync((dynamic)@event!, token);
     }
 }

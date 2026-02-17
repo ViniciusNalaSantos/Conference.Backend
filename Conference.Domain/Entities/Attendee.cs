@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Conference.Domain.Entities;
-public sealed class Attendees
+public sealed class Attendee
 {
     public int Id { get; set; }
     public string Name { get; set; }

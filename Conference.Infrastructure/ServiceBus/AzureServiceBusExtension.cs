@@ -1,5 +1,8 @@
 ﻿using Azure.Messaging.ServiceBus;
 using Conference.Application.EventBus;
+using Conference.Application.Handlers;
+using Conference.Application.Messages;
+using Conference.Application.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -21,7 +24,14 @@ internal static class AzureServiceBusExtension
             return new ServiceBusClient(options.ConnectionString);
         });
 
-        services.AddScoped<IServiceBusPublisher, AzureServiceBusPublisherAdapter>();
+        services.AddSingleton<IServiceBusPublisher, AzureServiceBusPublisherAdapter>();
+        services.AddSingleton<MessageDispatcher, MessageDispatcher>();
+        services.Scan(scan => scan
+            .FromApplicationDependencies()
+            .AddClasses(classes => classes.AssignableTo(typeof(IServiceBusMessageHandler<>)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime()
+        );
     }
 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Conference.Application.ServiceBus;
-public interface IServiceBusMessageHandler
+public interface IServiceBusMessageHandler<T>
 {
-    Task HandleMessageAsync(string messageBody, CancellationToken cancellationToken);
+    Task HandleMessageAsync(T @event, CancellationToken cancellationToken);
 }
