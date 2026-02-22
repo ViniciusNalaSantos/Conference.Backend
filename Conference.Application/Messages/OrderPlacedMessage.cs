@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Conference.Application.Messages;
-public record CreateOrderMessage
+public record OrderPlacedMessage
 {
-    public List<int> AttendeeIdList { get; set; } = new List<int>();
+    public int OrderId { get; set; }
     public int ConferenceId { get; set; }
-    public int SeatId { get; set; }
+    public int NumberOfSeats { get; set; }
 }

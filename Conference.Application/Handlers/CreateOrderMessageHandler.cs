@@ -6,14 +6,21 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Conference.Application.Handlers;
-public class CreateOrderMessageHandler : IServiceBusMessageHandler<CreateOrderMessage>
+public class CreateOrderMessageHandler : IServiceBusMessageHandler<OrderCreatedMessage>
 {
-    async Task IServiceBusMessageHandler<CreateOrderMessage>.HandleMessageAsync(CreateOrderMessage @event, CancellationToken cancellationToken)
+    async Task IServiceBusMessageHandler<OrderCreatedMessage>.HandleMessageAsync(OrderCreatedMessage @event, CancellationToken cancellationToken)
     {
         var order = new Order(
-            @event.AttendeeIdList,
             @event.ConferenceId,
             @event.SeatId
         );
+
+        foreach (var id in @event.AttendeeIdList)
+        {
+            order.AddAttendee(id);
+        }
+
+        // _repository.save(order); publishes any events raised by the Order aggregate on the command bus
+        // raises OrderPlacedEvent
     }
 }

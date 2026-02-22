@@ -24,7 +24,7 @@ public class OrdersController: ControllerBase
             return UnprocessableEntity();
         }
 
-        var message = new CreateOrderMessage
+        var message = new OrderCreatedMessage
         {
             AttendeeIdList = inputOrder.AttendeeIdList,
             ConferenceId = inputOrder.ConferenceId,
