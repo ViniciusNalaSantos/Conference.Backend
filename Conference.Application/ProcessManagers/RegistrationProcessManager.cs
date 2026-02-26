@@ -1,4 +1,5 @@
 ﻿using Conference.Application.Commands;
+using Conference.Application.EventBus;
 using Conference.Application.Messages;
 using Conference.Application.ServiceBus;
 using System;
@@ -9,7 +10,7 @@ using System.Windows.Input;
 namespace Conference.Application.ProcessManagers;
 public class RegistrationProcessManager : IServiceBusMessageHandler<OrderPlacedMessage>
 {
-    //private readonly List<Envelope<ICommand>> commands = new List<Envelope<ICommand>>();
+    private readonly IServiceBusPublisher _serviceBus;
     public enum ProcessState
     {
         NotStarted = 0,
@@ -19,28 +20,24 @@ public class RegistrationProcessManager : IServiceBusMessageHandler<OrderPlacedM
     }
     public ProcessState State { get; set; }
 
-    public Task HandleMessageAsync(OrderPlacedMessage @event, CancellationToken cancellationToken)
+    public async Task HandleMessageAsync(OrderPlacedMessage @event, CancellationToken cancellationToken)
     {
         if (this.State == ProcessState.NotStarted)
         {
             this.State = ProcessState.AwaitingReservationConfirmation;
 
-            //this.AddCommand(new MakeSeatReservationCommand
-            //{
-            //    ConferenceId = @event.ConferenceId,
-            //    ReservationId = Guid.NewGuid(),
-            //    NumberOfSeats = @event.NumberOfSeats,
-            //})
+            var command = new MakeSeatReservationCommand
+            {
+                ConferenceId = @event.ConferenceId,
+                ReservationId = Guid.NewGuid(),
+                NumberOfSeats = @event.NumberOfSeats,
+            };
 
+            await _serviceBus.PublishMessageAsync(command);
         }
         else
         {
             throw new InvalidOperationException();
         }
-    }
-
-    private void AddCommand<T>(T command) where T : ICommand
-    {
-        //this.commands.Add(Envelope.Create<ICommand>(command));
     }
 }

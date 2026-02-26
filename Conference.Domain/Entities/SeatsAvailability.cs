@@ -14,9 +14,11 @@ public enum SeatStatus
 
 public sealed class SeatsAvailability: IAggregateRoot
 {
-    public int Id { get; set; }
-    public int ConferenceId { get; set; }
-    public required Conference Conference { get; set; }
+    public int Id { get; private set; }
+    public Conference Conference { get; private set; }
     public int AttendeeId { get; set; }
     public SeatStatus Status { get; private set; }
+
+    private SeatsAvailability() { } // EF Core
+    public MakeReservation(int reservationId, )
 }
