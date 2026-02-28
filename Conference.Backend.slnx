@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Itens de Solução/">
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Project Path="Conference.Application/Conference.Application.csproj" />
   <Project Path="Conference.Domain/Conference.Domain.csproj" />
   <Project Path="Conference.Infrastructure/Conference.Infrastructure.csproj" />

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Conference.Application.Handlers;
+namespace Conference.Infrastructure.Handlers;
 public class CreateOrderMessageHandler : IServiceBusMessageHandler<OrderCreatedMessage>
 {
     public async Task HandleMessageAsync(OrderCreatedMessage @event, CancellationToken cancellationToken)

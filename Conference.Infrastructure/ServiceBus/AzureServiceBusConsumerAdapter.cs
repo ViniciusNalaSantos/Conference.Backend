@@ -12,7 +12,7 @@ public class AzureServiceBusConsumerAdapter: BackgroundService
     private readonly ServiceBusProcessor _processor;
     private readonly MessageDispatcher _dispatcher;
 
-    public AzureServiceBusConsumerAdapter(ServiceBusClient client, IOptions<ServiceBusSettings> options, IMessageDispatcher dispatcher)
+    public AzureServiceBusConsumerAdapter(ServiceBusClient client, IOptions<ServiceBusSettings> options, MessageDispatcher dispatcher)
     {
         var queueName = options.Value.QueueName;
         _processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions { AutoCompleteMessages = false });
