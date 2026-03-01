@@ -20,14 +20,14 @@ public sealed class Order: IAggregateRoot
     public int Id { get; private set; }
     public int ConferenceId { get; private set; }
     public IReadOnlyCollection<int> AttendeesId => _listAttendeesId;
-    public int SeatId { get; private set; }
+    public int SeatQuantity { get; private set; }
     public OrderStatus Status { get; private set; }
 
     private Order() { } // EF Core
-    public Order(int conferenceId, int seatId)
+    public Order(int conferenceId, int seatQuantity)
     {
         ConferenceId = conferenceId;
-        SeatId = seatId;
+        SeatQuantity = seatQuantity;
     }
     public void AddAttendee(int attendeeId)
     {
@@ -42,5 +42,25 @@ public sealed class Order: IAggregateRoot
         }
 
         Status = OrderStatus.Booked;
+    }
+
+    public static Order Rehydrate(
+        int id,
+        int conferenceId,
+        int seatQuantity,
+        OrderStatus status,
+        IEnumerable<int> attendeesIdList
+    )
+    {
+        var order = new Order();
+        
+        order.Id = id;
+        order.ConferenceId = conferenceId;
+        order.SeatQuantity = seatQuantity;
+        order.Status = status;
+
+        order._listAttendeesId.AddRange(attendeesIdList);
+
+        return order;
     }
 }
