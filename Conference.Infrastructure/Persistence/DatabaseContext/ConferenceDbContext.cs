@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Conference.Infrastructure.Persistence.DatabaseContext;
 
-public partial class DbContext : Microsoft.EntityFrameworkCore.DbContext
+public partial class ConferenceDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
-    public DbContext()
+    public ConferenceDbContext()
     {
     }
 
-    public DbContext(DbContextOptions<DbContext> options)
+    public ConferenceDbContext(DbContextOptions<ConferenceDbContext> options)
         : base(options)
     {
     }
