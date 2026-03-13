@@ -1,4 +1,5 @@
-﻿using Conference.Infrastructure.Persistence.DatabaseContext;
+﻿using Conference.Domain.Entities;
+using Conference.Infrastructure.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,11 @@ public class SeatsAvailabilityRepository
         var seatAvailability = await _context.SeatsAvailabilities
             .FirstOrDefaultAsync(o =>  o.ConferenceId == conferenceId && o.Id == id);
 
-
+        return Domain.Entities.SeatsAvailability.Rehydrate(
+            seatAvailability.Id,
+            seatAvailability.ConferenceId,
+            1,
+            (SeatStatus)seatAvailability.Status
+        );
     }
 }
