@@ -44,6 +44,16 @@ public sealed class Order: IAggregateRoot
         Status = OrderStatus.Booked;
     }
 
+    public void Rejected()
+    {
+        if (Status != OrderStatus.Created)
+        {
+            throw new InvalidOperationException();
+        }
+
+        Status = OrderStatus.Rejected;
+    }
+
     public static Order Rehydrate(
         int id,
         int conferenceId,

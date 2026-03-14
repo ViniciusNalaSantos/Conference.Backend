@@ -18,10 +18,21 @@ public sealed class SeatsAvailability: IAggregateRoot
     public int ConferenceId { get; private set; }
     public int AttendeeId { get; set; }
     public SeatStatus Status { get; private set; }
+    public int RemainingSeatsQuantity { get; private set; }
 
     private SeatsAvailability() { } // EF Core
     
-    //public MakeReservation(int reservationId, )
+    public void MakeReservation(Guid reservationId, int numberOfSeats)
+    {
+        if (numberOfSeats > RemainingSeatsQuantity)
+        {
+            //this.events.Add(new ReservationRejected { ReservationId = reservationId, ConferenceId = this.Id });
+        }
+
+        //this.PendingReservations.Add(new Reservation(reservationId, numberOfSeats));
+        //this.RemainingSeats -= numberOfSeats;
+        //this.events.Add(new ReservationAccepted { ReservationId = reservationId, ConferenceId = this.Id });
+    }
 
     public static SeatsAvailability Rehydrate(
         int id,

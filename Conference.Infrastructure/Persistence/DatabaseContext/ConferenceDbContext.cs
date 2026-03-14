@@ -94,6 +94,11 @@ public partial class ConferenceDbContext : Microsoft.EntityFrameworkCore.DbConte
                 .HasForeignKey(d => d.ConferenceId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Fk_SeatsAvailability_Conferences_ConferenceId");
+
+            entity.HasOne(d => d.Attendee).WithMany(p => p.SeatsAvailabilities)
+                .HasForeignKey(d => d.AttendeeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Fk_SeatsAvailability_Attendees_AttendeeId");
         });
 
         OnModelCreatingPartial(modelBuilder);

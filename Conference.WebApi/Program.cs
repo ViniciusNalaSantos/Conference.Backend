@@ -1,4 +1,5 @@
 using Conference.Infrastructure.ServiceBus;
+using Conference.Infrastructure.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.Configure<ServiceBusSettings>(
     builder.Configuration.GetSection("ServiceBus")
 );
 builder.Services.AddAzureServiceBusService();
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 
