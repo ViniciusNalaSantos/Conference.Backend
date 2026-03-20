@@ -12,7 +12,7 @@ public enum SeatStatus
     Blocked = 4
 }
 
-public sealed class SeatsAvailability: IAggregateRoot
+public sealed class SeatsAvailability: AggregateRoot
 {
     public int Id { get; private set; }
     public int ConferenceId { get; private set; }

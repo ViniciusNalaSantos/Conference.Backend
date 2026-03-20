@@ -16,4 +16,11 @@ public partial class Order
     public virtual Conference Conference { get; set; } = null!;
 
     public virtual ICollection<Attendee> Attendees { get; set; } = new List<Attendee>();
+
+    public void ApplyToAggregate(Domain.Entities.Order order)
+    {
+        ConferenceId = order.ConferenceId;
+        Status = (int)order.Status;
+        SeatsQuantity = order.SeatQuantity;
+    }
 }

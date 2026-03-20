@@ -31,7 +31,7 @@ public class SeatsAvailabilityRepository: ISeatsAvailabilityRepository
     public async Task Save(SeatsAvailability availability)
     {
         var model = await _context.SeatsAvailabilities
-            .FirstOrDefaultAsync(o => o.Id == availability.Id);
+            .FindAsync(availability.Id);
 
         model?.ApplyToAggregate(availability);
 

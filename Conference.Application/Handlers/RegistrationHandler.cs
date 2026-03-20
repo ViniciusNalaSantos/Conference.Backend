@@ -19,6 +19,6 @@ public class RegistrationHandler : IServiceBusMessageHandler<MakeSeatReservation
     {
         var availability = await _repository.GetSeatsAvailabilityByConferenceId(@event.ConferenceId);
         availability.MakeReservation(@event.ReservationId, @event.NumberOfSeats);
-        _repository.Save(availability);
+        await _repository.Save(availability);
     }
 }

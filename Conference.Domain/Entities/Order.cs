@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Conference.Application.Messages;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,10 +13,9 @@ public enum OrderStatus
     Confirmed = 3
 }
 
-public sealed class Order: IAggregateRoot
+public sealed class Order: AggregateRoot
 {
     private readonly List<int> _listAttendeesId = new();
-    //private readonly List<IEvents> _events = new();
 
     public int Id { get; private set; }
     public int ConferenceId { get; private set; }
@@ -28,6 +28,13 @@ public sealed class Order: IAggregateRoot
     {
         ConferenceId = conferenceId;
         SeatQuantity = seatQuantity;
+
+        AddDomainEvent(new OrderPlacedEvent 
+        {
+            OrderId = Id,
+            ConferenceId = ConferenceId,
+            NumberOfSeats = AttendeesId.Count
+        });
     }
     public void AddAttendee(int attendeeId)
     {

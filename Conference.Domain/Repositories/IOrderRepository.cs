@@ -7,4 +7,5 @@ namespace Conference.Domain.Repositories;
 public interface IOrderRepository: IRepository
 {
     Task<Order> GetById(int id);
+    Task Save(Order order);
 }

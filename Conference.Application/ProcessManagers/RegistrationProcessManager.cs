@@ -11,6 +11,11 @@ namespace Conference.Application.ProcessManagers;
 public class RegistrationProcessManager : IServiceBusMessageHandler<OrderPlacedMessage>
 {
     private readonly IServiceBusPublisher _serviceBus;
+
+    public RegistrationProcessManager(IServiceBusPublisher serviceBus)
+    {
+        _serviceBus = serviceBus;
+    }
     public enum ProcessState
     {
         NotStarted = 0,

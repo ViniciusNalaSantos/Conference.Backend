@@ -1,6 +1,7 @@
 ﻿using Conference.Application.Messages;
 using Conference.Application.ServiceBus;
 using Conference.Domain.Entities;
+using Conference.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,11 @@ using System.Text;
 namespace Conference.Application.Handlers;
 public class CreateOrderMessageHandler : IServiceBusMessageHandler<OrderCreatedMessage>
 {
+    private readonly IOrderRepository _repository;
+    public CreateOrderMessageHandler(IOrderRepository repository)
+    {
+        _repository = repository;
+    }
     async Task IServiceBusMessageHandler<OrderCreatedMessage>.HandleMessageAsync(OrderCreatedMessage @event, CancellationToken cancellationToken)
     {
         var order = new Order(
@@ -20,7 +26,6 @@ public class CreateOrderMessageHandler : IServiceBusMessageHandler<OrderCreatedM
             order.AddAttendee(id);
         }
 
-        // _repository.save(order); publishes any events raised by the Order aggregate on the command bus
-        // raises OrderPlacedEvent
+        await _repository.Save(order);
     }
 }
